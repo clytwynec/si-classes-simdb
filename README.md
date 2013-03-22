@@ -158,4 +158,44 @@ $ rails g model Role
       create        test/factories/roles.rb
 ```
 
+### 01. Generate Role Model ###
+
+```
+$ rails g model Role
+      invoke  active_record
+      create    db/migrate/20130322135917_create_roles.rb
+      create    app/models/role.rb
+      invoke    test_unit
+      create      test/unit/role_test.rb
+      invoke      factory_girl
+      create        test/factories/roles.rb
+```
+
+### 02. Run the join table migration ###
+
+```
+$ rake db:migrate
+==  CreateRoles: migrating ====================================================
+-- create_table(:roles)
+   -> 0.0335s
+==  CreateRoles: migrated (0.0336s) ===========================================
+```
+
+### 03. Create a migration to drop the genre_id colum from Movies ###
+
+```
+$ rails g migration DropDirectorFromMovie
+      invoke  active_record
+      create    db/migrate/20130322140228_drop_director_from_movie.rb
+```
+
+### 04. Run the migration ###
+
+```
+$ rake db:migrate
+==  DropDirectorFromMovies: migrating ==========================================
+-- remove_column(:movies, :director_id)
+   -> 0.0885s
+==  DropDirectorFromMovies: migrated (0.2793s) =================================
+```
 
