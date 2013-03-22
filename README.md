@@ -143,4 +143,19 @@ $ rake db:migrate
 ==  AddDirectorToMovie: migrated (0.0007s) ====================================
 ```
 
+## Part 10. Add Roles ##
+
+### 01. Generate Role Model ###
+
+```
+$ rails g model Role
+      invoke  active_record
+      create    db/migrate/20130322135917_create_roles.rb
+      create    app/models/role.rb
+      invoke    test_unit
+      create      test/unit/role_test.rb
+      invoke      factory_girl
+      create        test/factories/roles.rb
+```
+
 

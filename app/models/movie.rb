@@ -1,8 +1,9 @@
 class Movie < ActiveRecord::Base
-  attr_accessible :title, :description, :released_on, :poster_url, :tagline, :tmdb_id, :imdb_id
+  attr_accessible :title, :description, :released_on, :poster_url, :tagline, :tmdb_id, :imdb_id, :roles, :people
 
   has_and_belongs_to_many :genres
-  belongs_to :director, :class_name => "Person"
+  has_many :roles
+  has_many :people, through: :roles
 
   paginates_per 10
 

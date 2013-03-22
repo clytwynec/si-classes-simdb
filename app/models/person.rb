@@ -1,5 +1,6 @@
 class Person < ActiveRecord::Base
-  attr_accessible :name, :photo_url, :tmdb_id
+  attr_accessible :name, :photo_url, :tmdb_id, :roles, :movies
 
-  has_many :movies, :inverse_of => :director, :foreign_key => 'director_id'
+  has_many :roles
+  has_many :movies, through: :roles
 end
