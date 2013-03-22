@@ -23,6 +23,7 @@ gem 'inherited_resources'
 
 group :development, :test do
   gem 'factory_girl_rails'
+  gem 'romans'
 end
 
 # Gems used only for assets and not required

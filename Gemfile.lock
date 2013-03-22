@@ -97,6 +97,7 @@ GEM
       json (~> 1.4)
     responders (0.9.3)
       railties (~> 3.1)
+    romans (0.1.0)
     ruby-tmdb3 (0.3.4)
       addressable
       addressable
@@ -147,6 +148,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   rails (= 3.2.12)
+  romans
   ruby-tmdb3
   sass-rails (~> 3.2.3)
   simple_form
