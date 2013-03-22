@@ -14,4 +14,17 @@ class MovieTest < ActiveSupport::TestCase
       assert movie.save, "could not save a valid movie"
     end
   end
+
+  test "movie requires a unique title" do
+    existing = create(:movie, title: "War Games")
+    
+    [existing.title, existing.title.downcase].each do |try_title|
+      movie = build(:movie, title: try_title)
+
+      assert !movie.save
+      assert !movie.errors.blank?
+      assert_equal 1, movie.errors.count
+      assert_equal ["has already been taken"], movie.errors[:title]
+    end
+  end
 end

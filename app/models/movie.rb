@@ -4,5 +4,5 @@ class Movie < ActiveRecord::Base
   paginates_per 10
 
   validates :title, :description, :released_on, presence: true
-  validates :title, uniqueness: true
+  validates :title, uniqueness: { case_sensitive: false }
 end
