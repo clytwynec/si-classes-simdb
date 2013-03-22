@@ -7,6 +7,8 @@
 
 .movie-data
   %dl
+    %dt Genre
+    %dd= @movie.genre.title
     %dt Release Date
     %dd= @movie.released_on
     %dt The Movie Database ID
