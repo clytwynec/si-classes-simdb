@@ -2,7 +2,7 @@ require 'test_helper'
 
 class MoviesControllerTest < ActionController::TestCase
   test "index displays a list of movies when there are movies" do
-    (1..20).each { |i| create_movie("Title ##{i}") }
+    FactoryGirl.create_list(:movie, 20)
     get :index
     assert_response :success
 
@@ -25,7 +25,7 @@ class MoviesControllerTest < ActionController::TestCase
 
   test "update with valid movie" do
     new_title = "James Bond: From GitHub with Love"
-    movie = create_movie("James Bond: Octocat")
+    movie = FactoryGirl.create(:movie, title: "James Bond: Octocat")
 
     post :update, id: movie.id, movie: { :title => new_title }
 
@@ -38,7 +38,7 @@ class MoviesControllerTest < ActionController::TestCase
 
   test "update with invalid movie" do
     new_title = ""
-    movie = create_movie("James Bond: Octocat")
+    movie = FactoryGirl.create(:movie, title: "James Bond: Octocat")
 
     post :update, id: movie.id, movie: { :title => new_title }
 
@@ -49,15 +49,4 @@ class MoviesControllerTest < ActionController::TestCase
     assert_equal 1, assigned_movie.errors.count
     assert_equal ["can't be blank"], assigned_movie.errors[:title]
   end
-
-private
-
-  def create_movie(title)
-    Movie.create( :title => title, 
-                  :released_on => Date.today, 
-                  :description => 'Man, you should really look into something better... Perhaps FactoryGirl?', 
-                  :tagline => "In a world.... where...." )
-
-  end
-
 end
