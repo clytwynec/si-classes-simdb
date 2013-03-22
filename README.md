@@ -64,7 +64,7 @@ $ rake db:migrate
 ==  AddGenreToMovie: migrated (0.0013s) =======================================
 ```
 
-## Part 8 - Multi Genre ##
+## Part 08 - Multi Genre ##
 
 ### 01. Create the Movie / Genre join table migration ###
 
@@ -103,6 +103,44 @@ $ rake db:migrate
 -- remove_column(:movies, :genre_id)
    -> 0.0885s
 ==  DropGenreFromMovies: migrated (0.2793s) ===================================
+```
+
+## Part 09 - Add Director ##
+
+### 01. Generate Person model ###
+
+```
+$ rails g model Person
+      invoke  active_record
+      create    db/migrate/20130322132531_create_people.rb
+      create    app/models/person.rb
+      invoke    test_unit
+      create      test/unit/person_test.rb
+      invoke      factory_girl
+      create        test/factories/people.rb
+```
+
+### 02. Add Director to Model ###
+
+```
+$ rails g migration AddDirectorToMovie
+      invoke  active_record
+      create    db/migrate/20130322133252_add_director_to_movie.rb
+```
+
+### 03. Run Migrations ###
+
+```
+$ rake db:migrate
+==  CreatePeople: migrating ===================================================
+-- create_table(:people)
+   -> 0.0320s
+==  CreatePeople: migrated (0.0321s) ==========================================
+
+==  AddDirectorToMovie: migrating =============================================
+-- add_column(:movies, :director_id, :integer)
+   -> 0.0006s
+==  AddDirectorToMovie: migrated (0.0007s) ====================================
 ```
 
 

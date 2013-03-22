@@ -55,9 +55,46 @@ namespace :data do
     end
   end
 
+  desc "Update all movies with their Director"
+  task :directorify => :environment do
+    Tmdb.api_key = ENV['TMDB_KEY']
+
+    movie_ids.each do |movie_id|
+      puts "    Finding #{movie_id}..."
+      movie = Movie.find_by_tmdb_id(movie_id)
+      puts "*** Movie with tmdb_id = #{movie_id} not in DB." if movie.nil?
+      next if movie.nil?
+
+      tmdb = TmdbMovie.find(id: movie_id)
+      puts "*** TMDB could not find movie #{movie_id}." if movie.nil?
+      next if tmdb.nil?
+
+      director_data = find_director(tmdb)
+      puts "*** '#{movie.title}' does not fit exisitng genre for #{genre_names}" if director_data.nil?
+
+      director = Person.find_by_tmdb_id(director_data.id)
+      if director.nil?
+        director = Person.create(name: director_data.name, 
+                                 photo_url: "http://cf2.imgobject.com/t/p/original/#{director_data.profile_path}",
+                                 tmdb_id: director_data.id)
+                                 
+      end
+
+      movie.director = director
+      puts "*** Error saving '#{movie.title}' - #{movie.errors}" unless movie.save
+    end
+  end
+
 private
 
   def find_genres(names)
     Genre.where("title in (?)", names)
+  end
+
+  def find_director(tmdb_movie)
+    tmdb_movie.crew.each do |crew_member|
+      return crew_member if crew_member.job == 'Director'
+    end
+    nil
   end
 end
