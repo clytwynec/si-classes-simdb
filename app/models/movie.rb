@@ -9,4 +9,9 @@ class Movie < ActiveRecord::Base
 
   validates :title, :description, :released_on, presence: true
   validates :title, uniqueness: { case_sensitive: false }
+
+  def director
+    director_role = self.roles.find_by_title("Director")
+    director_role.person if director_role
+  end
 end
