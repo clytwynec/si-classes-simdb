@@ -2,7 +2,7 @@ require 'test_helper'
 
 class MoviesControllerTest < ActionController::TestCase
   test "index displays a list of movies when there are movies" do
-    FactoryGirl.create_list(:movie, 20)
+    create_list(:movie, 20)
     get :index
     assert_response :success
 
@@ -25,7 +25,7 @@ class MoviesControllerTest < ActionController::TestCase
 
   test "update with valid movie" do
     new_title = "James Bond: From GitHub with Love"
-    movie = FactoryGirl.create(:movie, title: "James Bond: Octocat")
+    movie = create(:movie, title: "James Bond: Octocat")
 
     post :update, id: movie.id, movie: { :title => new_title }
 
@@ -38,7 +38,7 @@ class MoviesControllerTest < ActionController::TestCase
 
   test "update with invalid movie" do
     new_title = ""
-    movie = FactoryGirl.create(:movie, title: "James Bond: Octocat")
+    movie = create(:movie, title: "James Bond: Octocat")
 
     post :update, id: movie.id, movie: { :title => new_title }
 

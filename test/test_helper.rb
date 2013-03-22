@@ -8,3 +8,8 @@ require 'rails/test_help'
 
 class ActiveSupport::TestCase
 end
+
+class Test::Unit::TestCase
+  include FactoryGirl::Syntax::Methods
+end
+
