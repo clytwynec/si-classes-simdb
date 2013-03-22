@@ -14,4 +14,8 @@ class Movie < ActiveRecord::Base
     director_role = self.roles.find_by_title("Director")
     director_role.person if director_role
   end
+
+  def self.afi_eligible
+    Movie.where("released_on < ?", 10.years.ago)
+  end
 end
