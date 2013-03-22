@@ -4,10 +4,7 @@ class MovieTest < ActiveSupport::TestCase
   [:title, :description, :released_on].each do |field|
     test "movies requires a #{field}" do
       movie = build(:movie, field => nil)
-      assert !movie.save, "could save movie without having a #{field}"
-      assert !movie.errors.blank?
-      assert_equal 1, movie.errors.count
-      assert_equal ["can't be blank"], movie.errors[field]
+      assert_save_error movie, field, "can't be blank"
 
       valid_movie = build(:movie)
       movie.send("#{field}=",valid_movie.send(field))
@@ -20,11 +17,17 @@ class MovieTest < ActiveSupport::TestCase
     
     [existing.title, existing.title.downcase].each do |try_title|
       movie = build(:movie, title: try_title)
-
-      assert !movie.save
-      assert !movie.errors.blank?
-      assert_equal 1, movie.errors.count
-      assert_equal ["has already been taken"], movie.errors[:title]
+      assert_save_error movie, :title, "has already been taken"
     end
+  end
+
+private
+
+  def assert_save_error(model, field, error_message)
+    model_name = model.class.name
+    assert !model.save, "could save #{model_name} with invalid #{field}"
+    assert !model.errors.blank?, "#{model_name} with invalid #{field} should have gven an error"
+    assert_equal 1, model.errors.count
+    assert_equal [error_message], model.errors[field]
   end
 end
