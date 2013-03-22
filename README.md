@@ -63,3 +63,46 @@ $ rake db:migrate
    -> 0.0006s
 ==  AddGenreToMovie: migrated (0.0013s) =======================================
 ```
+
+## Part 8 - Multi Genre ##
+
+### 01. Create the Movie / Genre join table migration ###
+
+Create a migration that will be used for the join table.
+
+```
+$ rails g migration CreateMovieGenreJoin
+      invoke  active_record
+      create    db/migrate/20130322124335_create_movie_genre_join.rb
+```
+
+### 02. Run the join table migration ###
+
+```
+$ rake db:migrate
+==  CreateMovieGenreJoin: migrating ===========================================
+-- create_table(:genre_movie, {:id=>false})
+   -> 0.0335s
+==  CreateMovieGenreJoin: migrated (0.0336s) ==================================
+```
+
+### 03. Create a migration to drop the genre_id colum from Movies ###
+
+```
+$ rails g migration DropGenreFromMovies
+      invoke  active_record
+      create    db/migrate/20130322125010_drop_genre_from_movies.rb
+```
+
+### 04. Run the migration ###
+
+
+```
+$ rake db:migrate
+==  DropGenreFromMovies: migrating ============================================
+-- remove_column(:movies, :genre_id)
+   -> 0.0885s
+==  DropGenreFromMovies: migrated (0.2793s) ===================================
+```
+
+
