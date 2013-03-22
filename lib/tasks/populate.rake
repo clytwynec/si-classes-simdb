@@ -50,7 +50,7 @@ namespace :data do
       genres = find_genres(genre_names)
       puts "*** '#{movie.title}' does not fit exisitng genre for #{genre_names}" if genres.nil?
 
-      movie.genre = genres.first
+      movie.genres = genres
       puts "*** Error saving '#{movie.title}' - #{movie.errors}" unless movie.save
     end
   end
