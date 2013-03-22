@@ -1,14 +1,17 @@
 require 'test_helper'
 
 class MovieTest < ActiveSupport::TestCase
-  test "movies require a title" do
-    movie = build(:movie, title: nil)
-    assert !movie.save, "could save movie without having a title"
-    assert !movie.errors.blank?
-    assert_equal 1, movie.errors.count
-    assert_equal ["can't be blank"], movie.errors[:title]
+  [:title, :description, :released_on].each do |field|
+    test "movies requires a #{field}" do
+      movie = build(:movie, field => nil)
+      assert !movie.save, "could save movie without having a #{field}"
+      assert !movie.errors.blank?
+      assert_equal 1, movie.errors.count
+      assert_equal ["can't be blank"], movie.errors[field]
 
-    movie.title = 'Some title'
-    assert movie.save, "could not save a valid movie"
+      valid_movie = build(:movie)
+      movie.send("#{field}=",valid_movie.send(field))
+      assert movie.save, "could not save a valid movie"
+    end
   end
 end
